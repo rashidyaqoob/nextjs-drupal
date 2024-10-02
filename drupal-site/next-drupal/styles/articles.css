@@ -1,0 +1,120 @@
+/* Container styling */
+.blog-container {
+  padding: 20px;
+  background-color: #e0f7f9; /* Matches the card background in the image */
+}
+
+/* List styling */
+.post-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Each post card */
+.post-card {
+  display: flex;
+  flex: 1;
+  margin-right: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover effect */
+.post-card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+}
+
+/* Image styling */
+.post-image img {
+  width: 120px;
+  height: 120px;
+  border-radius: 8px; /* Rounded corners for the image */
+  object-fit: cover; /* Makes sure the image fits without distortion */
+}
+
+/* Content styling */
+.post-content {
+  flex-grow: 1;
+  margin-left: 20px;
+}
+
+.post-content h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.post-content p {
+  margin: 8px 0;
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+/* Price styling */
+.post-price {
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+/* Buy button */
+.post-button {
+  background-color: #6c757d; /* Greyish button color */
+  color: white;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.post-button:hover {
+  background-color: #495057;
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 768px) {
+  .post-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .post-content {
+    margin: 15px 0;
+  }
+
+  .post-image {
+    margin-bottom: 15px;
+  }
+}
+
+.read-more {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #0070f3;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.read-more:hover {
+  background-color: #005bb5;
+}

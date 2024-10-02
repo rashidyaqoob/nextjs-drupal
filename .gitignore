@@ -1,0 +1,10 @@
+/drupal-site/.ddev/
+/drupal-site/web/core/
+/drupal-site/web/modules/
+/drupal-site/web/profiles
+/drupal-site/web/themes
+/drupal-site/vendor/
+/drupal-site/next-drupal/lib
+/drupal-site/next-drupal/public
+/drupal-site/next-drupal/pages/api
+/drupal-site/web/sites
