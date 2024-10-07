@@ -12,7 +12,9 @@ export async function getStaticProps() {
         include: 'field_image',
       },
       });
-    console.log("POSTS",posts)
+    console.log("POSTS", posts)
+    console.log(process.env.DRUPAL_CLIENT_ID, process.env.DRUPAL_CLIENT_SECRET)
+
 
     return {
       props: {
