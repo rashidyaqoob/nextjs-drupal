@@ -1,43 +1,53 @@
-import { DrupalClient } from 'next-drupal'
-import Image from 'next/image'
-import { absoluteUrl } from 'lib/utils'
-import Link from 'next/link'
-import { drupal } from 'lib/drupal'
-import { GetStaticPropsContext } from 'next'
+import Image from 'next/image';
+import Link from 'next/link';
+import { absoluteUrl } from 'lib/utils';
+import { drupal } from 'lib/drupal';
 
-const client = new DrupalClient(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL)
-
+// Fetch the articles with images using getStaticProps
 export async function getStaticProps() {
-  const posts = await client.getResourceCollection('node--article', {
-    params: {
-      include: 'field_image',
-       sort: "-created",
-    },
-  })
+  try {
+    const posts = await drupal.getResourceCollection('node--article',
+      {
+      params: {
+        include: 'field_image',
+      },
+      });
+    console.log("POSTS",posts)
 
-  return {
-    props: {
-      posts,
-    },
+    return {
+      props: {
+        posts,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching articles:', error);
+
+    return {
+      props: {
+        posts: [],
+        error: 'Failed to fetch articles. Please check your credentials.',
+      },
+    };
   }
 }
 
 export default function ArticlesPage({ posts }) {
-
   return (
-    <div className="blog-container ">
-      <h1 className='font-bold text-3xl mb-4'>Blog Articles</h1>
+    <div className="blog-container">
+      <h1 className="font-bold text-3xl mb-4">Blog Articles</h1>
       <ul className="post-list">
         {posts?.map((post) => (
           <li key={post.id} className="post-card__item">
             <div className="post-card">
+              {/* Display image if available */}
               {post.field_image && (
                 <div className="post-image">
                   <Image
-                    src={absoluteUrl(post.field_image.uri.url)}
+                    src={absoluteUrl(post.field_image.uri.url)}  // Use absolute URL for the image
                     alt={post.field_image.resourceIdObjMeta?.alt || 'Blog Image'}
                     width={150}
                     height={150}
+
                   />
                 </div>
               )}
@@ -56,5 +66,5 @@ export default function ArticlesPage({ posts }) {
         ))}
       </ul>
     </div>
-  )
+  );
 }
