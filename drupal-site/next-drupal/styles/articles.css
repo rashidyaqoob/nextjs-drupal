@@ -118,3 +118,327 @@
 .read-more:hover {
   background-color: #005bb5;
 }
+
+/* CreateArticleForm.module.css */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.label {
+  font-weight: 500;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+.input,
+.textarea {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: #0070f3;
+}
+
+.textarea {
+  height: 150px;
+  resize: vertical;
+}
+
+.button {
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #0070f3;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #005bb5;
+}
+
+.button:active {
+  background-color: #003e7e;
+}
+
+/* Global or module-based styles */
+
+/* Style for the button */
+.create-article-button {
+  background-color: #0070f3;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.create-article-button:hover {
+  background-color: #005bb5;
+}
+
+/* Modal overlay */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal content */
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  position: relative;
+}
+
+/* Modal close button */
+.modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* CSS */
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px; /* Adjust this as needed */
+}
+
+.create-article-button {
+  background-color: #0070f3;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.create-article-button:hover {
+  background-color: #005bb5;
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+}
+
+.modal-close-button:hover {
+  color: #ff0000;
+}
+
+.edit-article-button {
+  background-color: #0070f3;
+  color: #fff;
+  padding: 8px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.edit-article-button:hover {
+  background-color: #005bb5;
+  transform: translateY(-2px);
+}
+
+.edit-article-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.3);
+}
+
+.edit-article-button:active {
+  transform: scale(0.98);
+  background-color: #003d80;
+}
+/* Flex container for buttons */
+.article-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center; /* Ensure buttons are vertically aligned */
+  justify-content: flex-start; /* Align buttons to the left */
+}
+
+/* Edit button */
+.edit-article-button {
+  background-color: #0070f3;
+  color: white;
+  padding: 8px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.edit-article-button:hover {
+  background-color: #005bb5;
+  transform: translateY(-2px);
+}
+
+.edit-article-button:active {
+  transform: scale(0.98);
+  background-color: #003d80;
+}
+
+/* Delete button */
+.delete-article-button {
+  background-color: #ff4d4d;
+  color: white;
+  padding: 8px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-article-button:hover {
+  background-color: #e60000;
+}
+
+.delete-article-button:active {
+  background-color: #cc0000;
+}
+
+/* Create button */
+.create-article-button {
+  background-color: #0070f3;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.create-article-button:hover {
+  background-color: #005bb5;
+}
+
+/* Modal close button */
+.modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+}
+
+.modal-close-button:hover {
+  color: #ff0000;
+}
+
+.menu-dots {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.three-dots-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.options-dropdown {
+  position: absolute;
+  top: 35px;
+  right: 10px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.options-dropdown button {
+  background: none;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: left;
+  width: 100%;
+}
+
+.edit-option {
+  color: #0070f3;
+}
+
+.delete-option {
+  color: #ff4d4d;
+}
+
+.options-dropdown button:hover {
+  background-color: #f0f0f0;
+}
