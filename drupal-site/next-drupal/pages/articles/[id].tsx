@@ -93,19 +93,19 @@ export async function getStaticProps(context) {
   const post = await postResponse.json();
 
   // Step 4: Fetch the image URL using the "related" link from the article
-  const imageUrlResponse = await fetch(post.data.relationships.field_image.links.related.href, {
-    headers: {
-      'Authorization': 'Basic ' + btoa(`${process.env.DRUPAL_USERNAME}:${process.env.DRUPAL_PASSWORD}`),
-      'Content-Type': 'application/vnd.api+json',
-    },
-  });
-  const imageUrlJson = await imageUrlResponse.json();
-  const imageUrl = imageUrlJson.data.attributes.uri.url;
+  // const imageUrlResponse = await fetch(post.data.relationships.field_image.links.related.href, {
+  //   headers: {
+  //     'Authorization': 'Basic ' + btoa(`${process.env.DRUPAL_USERNAME}:${process.env.DRUPAL_PASSWORD}`),
+  //     'Content-Type': 'application/vnd.api+json',
+  //   },
+  // });
+  // const imageUrlJson = await imageUrlResponse.json();
+  // const imageUrl = imageUrlJson.data.attributes.uri.url;
 
   return {
     props: {
       post,
-      imageUrl,
+      // imageUrl,
     },
   };
 }
@@ -118,15 +118,7 @@ export default function ArticlePage({ post, imageUrl }) {
       </h1>
 
       <div className="mb-8">
-        {post?.data.relationships.field_image.data && (
-          <Image
-            className="rounded-lg shadow-lg"
-            src={absoluteUrl(imageUrl)}
-            alt={post.data.relationships.field_image.data.meta.alt || 'Blog Image'}
-            width={600}
-            height={400}
-          />
-        )}
+        {/*  */}
       </div>
 
       <div className="prose prose-lg max-w-none text-gray-700">

@@ -5,8 +5,11 @@ import { absoluteUrl } from 'lib/utils';
 import { drupal } from 'lib/drupal';
 import CreateArticleForm from 'components/create-article';
 import EditArticleForm from 'components/edit-article-form';
+import { Layout } from 'components/layout';
+import { fetchMenuItems } from 'pages/api/fetch-menu-items';
 
 export async function getStaticProps() {
+  const menuItems = await fetchMenuItems();
   try {
     const posts = await drupal.getResourceCollection('node--article', {
       params: {
@@ -17,6 +20,7 @@ export async function getStaticProps() {
     return {
       props: {
         posts,
+        menuItems
       },
     };
   } catch (error) {
@@ -25,13 +29,15 @@ export async function getStaticProps() {
     return {
       props: {
         posts: [],
+
         error: 'Failed to fetch articles. Please check your credentials.',
       },
     };
   }
 }
 
-export default function ArticlesPage({ posts }) {
+
+export default function ArticlesPage({ posts, menuItems }) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [currentPost, setCurrentPost] = useState(null);
@@ -70,7 +76,10 @@ export default function ArticlesPage({ posts }) {
     }
   };
 
+
+
   return (
+    <Layout menuItems={menuItems}>
     <div className="blog-container">
       <div className="header-container">
         <h1 className="font-bold text-3xl mb-4">Blog Articles</h1>
@@ -149,6 +158,7 @@ export default function ArticlesPage({ posts }) {
           </li>
         ))}
       </ul>
-    </div>
+      </div>
+      </Layout>
   );
 }
