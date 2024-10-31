@@ -1,66 +1,76 @@
-import { DrupalClient } from 'next-drupal'
-import Image from 'next/image'
-import { absoluteUrl } from 'lib/utils'
-import { GetStaticPropsContext } from 'next'
-
-const client = new DrupalClient(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL)
+import Image from 'next/image';
+import { absoluteUrl, fetchWithAuth } from 'lib/utils';
+import { GetStaticPropsContext } from 'next';
 
 // Generate the static paths
 export async function getStaticPaths() {
-  const posts = await client.getResourceCollection('node--article');
+  try {
+    const postsResponse = await fetchWithAuth(`/jsonapi/node/article`)
 
-  const paths = posts.map((post) => ({
-    params: { id: post.path.alias.replace('/blog/', '') }, // Replace as per your path
-  }));
+    const posts = await postsResponse;
 
-  console.log('Paths:', paths);
+    if (!posts.data || posts.data.length === 0) {
+      console.log('No posts found');
+      return {
+        paths: [],
+        fallback: false,
+      };
+    }
 
-  return {
-    paths,
-    fallback: false,
-  };
+    const paths = posts.data.map((post) => ({
+      params: { id: post.path.alias.replace('/blog/', '') },
+    }));
+      console.log('jvg', paths)
+
+    return {
+      paths,
+      fallback: false,
+    };
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    return {
+      paths: [],
+      fallback: false,
+    };
+  }
 }
-
-
-// export async function getStaticProps({ params }) {
-//   console.log(params.id)
-//   const post = await client.getResource('node--article', params.id, {
-//     params: {
-//       include: 'field_image',
-//     },
-//   })
-
-//   return {
-//     props: {
-//       post,
-//     },
-//   }
-// }
 
 export async function getStaticProps(context) {
   const { id } = context.params;
 
-  // Step 1: Fetch the path alias to get the corresponding system path (e.g., /node/4)
+  // Step 1: Fetch the alias using Basic Authentication
   const aliasResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/jsonapi/path_alias/path_alias?filter[alias]=/blog/${id}`
+    `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/jsonapi/path_alias/path_alias?filter[alias]=/blog/${id}`,
+    {
+      headers: {
+        'Authorization': 'Basic ' + btoa(`${process.env.DRUPAL_USERNAME}:${process.env.DRUPAL_PASSWORD}`),
+        'Content-Type': 'application/vnd.api+json',
+      },
+    }
   );
   const aliasJson = await aliasResponse.json();
+  console.log(aliasJson);
 
-  if (aliasJson.data.length === 0) {
+  if (!aliasJson.data || aliasJson.data.length === 0) {
     return {
-      notFound: true, // If no alias is found, return a 404 page
+      notFound: true,
     };
   }
 
-  // Step 2: Extract the internal node ID (nid) from the alias response
-  const nodeId = aliasJson.data[0].attributes.path.replace('/node/', '');
+  const nodeId = aliasJson?.data[0].attributes.path.replace('/node/', '');
 
-  // Step 3: Fetch the node to get the UUID using the node ID
-  // You need to query Drupal to get the UUID for the node
+  // Step 2: Fetch the node (article) using the internal node ID
   const nodeUuidResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/jsonapi/node/article?filter[drupal_internal__nid]=${nodeId}`
+    `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/jsonapi/node/article?filter[drupal_internal__nid]=${nodeId}`,
+    {
+      headers: {
+        'Authorization': 'Basic ' + btoa(`${process.env.DRUPAL_USERNAME}:${process.env.DRUPAL_PASSWORD}`),
+        'Content-Type': 'application/vnd.api+json',
+      },
+    }
   );
   const nodeUuidJson = await nodeUuidResponse.json();
+  console.log(nodeUuidJson);
 
   if (!nodeUuidJson.data || nodeUuidJson.data.length === 0) {
     return {
@@ -68,49 +78,60 @@ export async function getStaticProps(context) {
     };
   }
 
-  // Step 4: Fetch the article using the UUID
-  const nodeUuid = nodeUuidJson.data[0].id; // The UUID of the node
-  const postResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/jsonapi/node/article/${nodeUuid}`
-  );
-   const post = await postResponse.json();
+  const nodeUuid = nodeUuidJson.data[0].id;
 
-  // Step 5: Fetch the image URL using the "related" link from the article
-  const imageUrlResponse = await fetch(post.data.relationships.field_image.links.related.href);
+  // Step 3: Fetch the full article data using the UUID
+  const postResponse = await fetch(
+    `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/jsonapi/node/article/${nodeUuid}`,
+    {
+      headers: {
+        'Authorization': 'Basic ' + btoa(`${process.env.DRUPAL_USERNAME}:${process.env.DRUPAL_PASSWORD}`),
+        'Content-Type': 'application/vnd.api+json',
+      },
+    }
+  );
+  const post = await postResponse.json();
+
+  // Step 4: Fetch the image URL using the "related" link from the article
+  const imageUrlResponse = await fetch(post.data.relationships.field_image.links.related.href, {
+    headers: {
+      'Authorization': 'Basic ' + btoa(`${process.env.DRUPAL_USERNAME}:${process.env.DRUPAL_PASSWORD}`),
+      'Content-Type': 'application/vnd.api+json',
+    },
+  });
   const imageUrlJson = await imageUrlResponse.json();
-  const imageUrl = imageUrlJson.data.attributes.uri.url; // This contains the file URL for the image
-console.log(imageUrl)
+  const imageUrl = imageUrlJson.data.attributes.uri.url;
+
   return {
     props: {
-      post: post,
-      imageUrl: imageUrl,
+      post,
+      imageUrl,
     },
   };
 }
 
-
-
-
-
 export default function ArticlePage({ post, imageUrl }) {
-
   return (
+    <div className="max-w-3xl mx-auto p-4">
+      <h1 className="text-4xl font-bold text-gray-900 mb-6">
+        {post?.data.attributes.title}
+      </h1>
 
-    <div className="article-container">
-      <h1>{post.data.attributes.title}</h1>
-<div>
-      {post.data.relationships.field_image.data && (
-        <Image
-          src={absoluteUrl(imageUrl)}
-          alt={post.data.relationships.field_image.data.meta.alt || 'Blog Image'}
-          width={600}
-          height={400}
-        />
-      )}
+      <div className="mb-8">
+        {post?.data.relationships.field_image.data && (
+          <Image
+            className="rounded-lg shadow-lg"
+            src={absoluteUrl(imageUrl)}
+            alt={post.data.relationships.field_image.data.meta.alt || 'Blog Image'}
+            width={600}
+            height={400}
+          />
+        )}
       </div>
-      <div className="article-body">
-        <div dangerouslySetInnerHTML={{ __html: post.data.attributes.body.processed }} />
+
+      <div className="prose prose-lg max-w-none text-gray-700">
+        <div dangerouslySetInnerHTML={{ __html: post?.data.attributes.body.processed }} />
       </div>
     </div>
-  )
+  );
 }
