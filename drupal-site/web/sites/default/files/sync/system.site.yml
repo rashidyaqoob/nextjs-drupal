@@ -1,0 +1,15 @@
+_core:
+  default_config_hash: ijfbzDTN4CbE7Sr-6ubWzy_t1vH4OtU1doNCLssVz-4
+langcode: en
+uuid: e0f4ad1b-19a8-4ecc-a60b-948f2a95c2e1
+name: next-drupal
+mail: raashidyaqoob@gmail.com
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /node
+admin_compact_mode: false
+weight_select_max: 100
+default_langcode: en
+mail_notification: null
