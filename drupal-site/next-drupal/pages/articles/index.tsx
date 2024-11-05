@@ -6,7 +6,7 @@ import { drupal } from 'lib/drupal';
 import CreateArticleForm from 'components/create-article';
 import EditArticleForm from 'components/edit-article-form';
 import { Layout } from 'components/layout';
-import { fetchMenuItems } from 'pages/api/fetch-menu-items';
+
 
 export async function getStaticProps() {
 
@@ -42,6 +42,7 @@ export default function ArticlesPage({ posts, menuItems }) {
   const [currentPost, setCurrentPost] = useState(null);
   const [articles, setArticles] = useState(posts);
   const [showOptions, setShowOptions] = useState(null);
+
 
   const toggleModal = () => {
     setModalOpen(!isModalOpen);
