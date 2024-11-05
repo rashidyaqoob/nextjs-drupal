@@ -9,7 +9,7 @@ import { Layout } from 'components/layout';
 import { fetchMenuItems } from 'pages/api/fetch-menu-items';
 
 export async function getStaticProps() {
-  const menuItems = await fetchMenuItems();
+
   try {
     const posts = await drupal.getResourceCollection('node--article', {
       params: {
@@ -20,7 +20,7 @@ export async function getStaticProps() {
     return {
       props: {
         posts,
-        menuItems
+
       },
     };
   } catch (error) {
@@ -29,7 +29,6 @@ export async function getStaticProps() {
     return {
       props: {
         posts: [],
-
         error: 'Failed to fetch articles. Please check your credentials.',
       },
     };
@@ -79,7 +78,7 @@ export default function ArticlesPage({ posts, menuItems }) {
 
 
   return (
-    <Layout menuItems={menuItems}>
+    <Layout>
     <div className="blog-container">
       <div className="header-container">
         <h1 className="font-bold text-3xl mb-4">Blog Articles</h1>

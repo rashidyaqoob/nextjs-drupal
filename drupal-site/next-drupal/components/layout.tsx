@@ -1,19 +1,26 @@
-import Link from "next/link"
+// components/layout.tsx
+import Link from 'next/link';
+import { PreviewAlert } from 'components/preview-alert';
+import Navbar from './navbar';
+import { useMenu } from './menu-context';
 
-import { PreviewAlert } from "components/preview-alert"
-import Navbar from "./navbar"
+interface LayoutProps {
+  children: React.ReactNode;
+}
 
+export function Layout({ children }: LayoutProps) {
+  const { menuItems } = useMenu();
 
-
-export function Layout({ children, menuItems }) {
   return (
     <>
       <PreviewAlert />
-      <div className="max-w-screen-md px-6 mx-auto">
-        <header>
-          <Navbar menuItems={menuItems} />
+      <div className="mx-auto">
+        <header className='bg-gray-800'>
+          <div className="container mx-auto px-4">
+            <Navbar menuItems={menuItems} />
+          </div>
         </header>
-        <main className="container py-10 mx-auto">{children}</main>
+        <main className="container max-w-screen-xl py-10 mx-auto">{children}</main>
       </div>
     </>
   );

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { fetchMenuItems } from 'pages/api/fetch-menu-items';
 
 const Navbar = ({ menuItems }) => {
-  console.log('Navbar', menuItems)
+
   return (
     <nav className="bg-gray-800 p-4">
       <ul className="flex space-x-4">
