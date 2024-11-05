@@ -1,0 +1,26 @@
+uuid: 4c89fdae-4d6f-42e5-845d-1791e34c2d23
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - oauth2_server
+    - path
+    - simple_oauth
+    - system
+_core:
+  default_config_hash: cFrlqjtkTfvY3RGccjJkPf1SGIfJ942IrxTLWAO4mgA
+id: authenticated
+label: 'Authenticated user'
+weight: 1
+is_admin: false
+permissions:
+  - 'access content'
+  - 'administer oauth2 server'
+  - 'administer simple_oauth entities'
+  - 'administer url aliases'
+  - 'create url aliases'
+  - 'grant simple_oauth codes'
+  - 'use oauth2 server'
+  - 'view own simple_oauth entities'
+  - 'view own unpublished content'

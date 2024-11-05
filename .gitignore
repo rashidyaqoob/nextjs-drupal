@@ -7,6 +7,11 @@
 /drupal-site/next-drupal/node_modules/
 
 /drupal-site/next-drupal/public
-/drupal-site/web/sites
+/drupal-site/web/core
+/drupal-site/web/modules
+/drupal-site/web/profiles
+/drupal-site/web/sites/default/files/php
+
+
 
 /drupal-site/next-drupal/.next

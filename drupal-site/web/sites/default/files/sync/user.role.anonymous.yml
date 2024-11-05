@@ -1,0 +1,24 @@
+uuid: 4a568ca4-523d-44eb-b631-a1a229ca93a7
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.article
+  module:
+    - node
+    - path
+    - system
+_core:
+  default_config_hash: 6WavjUYXIegP9AAg2zXGx54MWIVoomC3SZhNiqe-Dyk
+id: anonymous
+label: 'Anonymous user'
+weight: 0
+is_admin: false
+permissions:
+  - 'access content'
+  - 'administer menu'
+  - 'administer url aliases'
+  - 'create article content'
+  - 'create url aliases'
+  - 'edit any article content'
+  - 'edit own article content'
