@@ -36,7 +36,6 @@ module:
   next_extras: 0
   next_jsonapi: 0
   node: 0
-  oauth2_server: 0
   options: 0
   page_cache: 0
   path: 0
