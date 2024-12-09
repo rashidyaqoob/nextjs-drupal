@@ -4,7 +4,6 @@ status: true
 dependencies:
   module:
     - node
-    - oauth2_server
     - path
     - simple_oauth
     - system
